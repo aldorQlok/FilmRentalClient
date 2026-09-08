@@ -1,22 +1,15 @@
-import { useEffect, useState } from "react";
-import axios from 'axios';
+import { deleteMovie } from "../services/MovieServices";
+
+import { MovieContext } from "../context/MovieContext";
+import {useState, useContext} from 'react';
 
 export default function MovieList() {
-    const [movies, setMovies] = useState([]);
+    const {getMovieList, movies} = useContext(MovieContext);
 
-    async function getMovieList() {
-        try {
-            const response = await axios.get('https://localhost:7063/api/Movies')
-            setMovies(response.data)
-            console.log(response.data);
-        } catch (error) {
-            console.log("Error fetching movies:", error)
-        }
+    async function handleDelete(movieId){
+        await deleteMovie(movieId);
+        await getMovieList();
     }
-
-    useEffect(() => {
-        getMovieList();
-    }, [])
 
     return (
         <>
@@ -26,6 +19,7 @@ export default function MovieList() {
                     <li key={movie.movieId}>
                         <p><b>Movie title:</b> {movie.title}</p>
                         <span><b>Released:</b> {movie.releaseYear}</span>
+                        <button onClick={() => handleDelete(movie.movieId)}>Delete</button>
                     </li>
                 ))}
             </ul>

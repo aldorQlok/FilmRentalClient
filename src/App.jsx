@@ -1,15 +1,16 @@
-import MovieList from './components/MovieList';
-import MovieCreate from './components/MovieCreate';
+import LoginPage from './pages/Login'
+import Movies from './pages/Movies'
+import {Routes, Route} from 'react-router'
+import ProtectedRoute from './components/ProtectedRoute'
 import './App.css'
-import { MovieProvider } from "./context/MovieContext"
 
 function App() {
 
   return (
-    <MovieProvider>
-      <MovieList />
-      <MovieCreate />
-    </MovieProvider>
+    <Routes>
+      <Route path='/login' element={<LoginPage />} />
+      <Route path='/movies' element={<ProtectedRoute > <Movies /> </ProtectedRoute>}/>
+    </Routes>
   )
 }
 

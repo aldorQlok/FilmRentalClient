@@ -1,16 +1,20 @@
 import {useState} from 'react';
 import {loginWithCookie} from '../services/AuthService'
+import { useNavigate } from 'react-router';
 
 export default function Login(){
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     async function handleSubmit(e){
         e.preventDefault();
         console.log(password)
         await loginWithCookie(email, password);
         console.log("Logged in!");
+
+        navigate("/movies");
     }
 
     return (
